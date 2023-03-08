@@ -10,6 +10,7 @@ var cors = require('cors')
 var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
 var postsRouter = require('./routes/posts');
+var reviewsRouter = require('./routes/reviews');
 
 var app = express();
 
@@ -28,6 +29,7 @@ app.use(
   app.use('/auth', authRouter);
   app.use('/users', usersRouter);
   app.use('/posts', postsRouter);
+  app.use('/reviews', reviewsRouter);
 
 app.use(function (req, res, next) {
     next(createError(404));

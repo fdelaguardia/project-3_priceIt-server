@@ -2,20 +2,11 @@ const { Schema, model } = require("mongoose");
 
 const postSchema = new Schema(
   {
-    title: {
-    type: String},
-    description: {
-      type: String,
-    },
-    price: {
-      type: Number,
-    },
-    condition: {
-      type: String,
-    },
-    postImages: {
-      type: String,
-    },
+    title: String,
+    description: String,
+    price: Number,
+    condition: String,
+    postImages: String,
     seller: {type: Schema.Types.ObjectId, ref: "User"}
   },
   {

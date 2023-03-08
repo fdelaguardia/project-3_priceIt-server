@@ -15,6 +15,10 @@ router.get('/profile/:userId', (req, res, next) => {
     })
 });
 
+
+
+
+
 router.post('/edit-profile/:userId', (req, res, next) => {
   User.findByIdAndUpdate(req.params.userId, {
       firstName: req.body.firstName,

@@ -16,7 +16,8 @@ const userSchema = new Schema(
     profileImage: String,
     state: String,
     city: String,
-    posts: [{type: Schema.Types.ObjectId, ref: "Post"}]
+    posts: [{type: Schema.Types.ObjectId, ref: "Post"}],
+    reviews: [{type: Schema.Types.ObjectId, ref: "Review"}],
   },
   {
     timeseries: true,
