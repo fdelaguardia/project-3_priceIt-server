@@ -64,6 +64,26 @@ router.post('/create-post/:userId', (req, res, next) => {
             console.log(err)
         })
 })
+ 
+
+
+
+
+router.post('/edit-post/:postId', (req, res, next) => {
+    Post.findByIdAndUpdate(req.params.postId, {
+            title: req.body.title,
+            description: req.body.description,
+            price: req.body.price,
+            condition: req.body.condition,
+            postImages: req.body.postImages,
+        }, {new: true})
+        .then((updatedPost) => {
+            res.json(updatedPost)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+})
 
 
 

@@ -18,11 +18,11 @@ router.get('/profile/:userId', (req, res, next) => {
 router.post('/edit-profile/:userId', (req, res, next) => {
   User.findByIdAndUpdate(req.params.userId, {
       firstName: req.body.firstName,
-      lastName: req.body.lastName,
       email: req.body.email,
-      profileImage: req.body.profileImage,
-      state: req.body.state,
-      city: req.body.city,
+      // lastName: req.body.lastName,
+      // profileImage: req.body.profileImage,
+      // state: req.body.state,
+      // city: req.body.city,
     }, {new: true})
     .then((updatedUser) => {
       res.json(updatedUser)
@@ -30,7 +30,6 @@ router.post('/edit-profile/:userId', (req, res, next) => {
     .catch((err) => {
       console.log(err)
     })
-
 })
 
 module.exports = router;
