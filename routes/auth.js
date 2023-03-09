@@ -26,11 +26,11 @@ router.post("/signup", (req, res, next) => {
                 User.create({
                     password: hashedPass,
                     email: req.body.email,
-                    firstName: req.body.firstName
-                    // lastName: req.body.lastName,
-                    // profileImage: req.body.profileImage,
-                    // state: req.body.state,
-                    // city: req.body.city,
+                    firstName: req.body.firstName,
+                    profileImage: req.body.profileImage,
+                    lastName: req.body.lastName,
+                    state: req.body.state,
+                    city: req.body.city,
                   })
                   .then((createdUser) => {
                       const payload = { _id: createdUser._id, email: createdUser.email, firstName: createdUser.firstName };

@@ -36,7 +36,7 @@ router.get('/post-detail/:id', (req, res, next) => {
 })
 
   
-
+ 
 
 
 router.post('/create-post/:userId', (req, res, next) => {

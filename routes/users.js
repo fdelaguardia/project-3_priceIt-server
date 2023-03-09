@@ -23,10 +23,10 @@ router.post('/edit-profile/:userId', (req, res, next) => {
   User.findByIdAndUpdate(req.params.userId, {
       firstName: req.body.firstName,
       email: req.body.email,
-      // lastName: req.body.lastName,
-      // profileImage: req.body.profileImage,
-      // state: req.body.state,
-      // city: req.body.city,
+      profileImage: req.body.profileImage,
+      lastName: req.body.lastName,
+      state: req.body.state,
+      city: req.body.city,
     }, {new: true})
     .then((updatedUser) => {
       res.json(updatedUser)

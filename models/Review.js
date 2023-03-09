@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 const reviewSchema = new Schema(
   {
       rates: String,
-      review: [{ type: String, maxlength: 200 }],
+      review: { type: String, maxlength: 200 },
       seller: { type: Schema.Types.ObjectId, ref: "User" },
   },
   {
