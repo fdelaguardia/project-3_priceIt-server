@@ -5,11 +5,12 @@ const Review = require('../models/Review')
 const User = require('../models/User')
 
 /* GET users listing. */
-router.get('/', (req, res, next) => {
-    Review.find()
-        .populate('seller')
+router.get('/:id', (req, res, next) => {
+    User.findById(req.params.id)
+        .populate('reviews')
         .sort({createdAt: -1})
         .then((foundReviews) => {
+            console.log("found reviews ",foundReviews)
             res.json(foundReviews)
         })
         .catch((err) => {

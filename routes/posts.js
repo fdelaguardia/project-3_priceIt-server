@@ -4,7 +4,7 @@ var router = express.Router();
 const Post = require('../models/Post')
 const User = require('../models/User')
 
-
+const fileUploader = require('../config/cloudinary.config')
 
 
 
@@ -19,6 +19,18 @@ router.get('/', (req, res, next) => {
             console.log(err)
         })
 })
+
+
+
+
+router.post("/upload-image", fileUploader.single('postImages'), (req, res) => {
+    console.log(req.file)
+    if (!req.file) {
+      return res.status(500).json({ msg: "Upload fail." });
+    }
+  
+    return res.status(201).json({ url: req.file.path });
+  });
  
 
 
@@ -26,7 +38,12 @@ router.get('/', (req, res, next) => {
 
 router.get('/post-detail/:id', (req, res, next) => {
     Post.findOne({_id: req.params.id})
-        .populate('seller')
+        .populate({path: 'seller', 
+            populate: [
+                {path: 'reviews'},
+                {path: 'posts'}
+            ]
+        })
         .then((foundPost) => {
             res.json(foundPost)
         })
@@ -45,8 +62,8 @@ router.post('/create-post/:userId', (req, res, next) => {
             description: req.body.description,
             price: req.body.price,
             condition: req.body.condition,
-            postImages: req.body.postImages,
             seller: req.params.userId,
+            postImages: req.body.postImages,
         })
         .then((createdPost) => {
             User.findByIdAndUpdate(req.params.userId, {
@@ -58,7 +75,13 @@ router.post('/create-post/:userId', (req, res, next) => {
                 .catch((err) => {
                     console.log(err)
                 })
-                res.json(createdPost)
+                return createdPost
+        })
+        .then((post) => {
+            return post.populate('seller')
+        })
+        .then((final) => {
+            res.json(final)
         })
         .catch((err) => {
             console.log(err)

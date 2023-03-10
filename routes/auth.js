@@ -9,6 +9,11 @@ const saltRounds = 10;
 
 const isAuthenticated = require('../middleware/isAuthenticated')
 
+const fileUploader = require('../config/cloudinary.config')
+
+
+
+
 /* GET users listing. */
 router.post("/signup", (req, res, next) => {
     if (!req.body.email || !req.body.password) {
@@ -27,9 +32,9 @@ router.post("/signup", (req, res, next) => {
                     password: hashedPass,
                     email: req.body.email,
                     firstName: req.body.firstName,
-                    profileImage: req.body.profileImage,
                     lastName: req.body.lastName,
                     state: req.body.state,
+                    profileImage: req.body.profileImage,
                     city: req.body.city,
                   })
                   .then((createdUser) => {
@@ -40,7 +45,7 @@ router.post("/signup", (req, res, next) => {
                         expiresIn: "24hr",
                       });
 
-                      res.json({ token: token, _id: createdUser._id, message: `Welcome ${createdUser.firstName}`  });
+                       res.json({ token: token, _id: createdUser._id, message: `Welcome ${createdUser.firstName}`  });
                   })
                   .catch((err) => {
                     res.status(400).json(err.message);
@@ -55,6 +60,17 @@ router.post("/signup", (req, res, next) => {
 
 
 
+
+
+
+router.post("/upload-image", fileUploader.single('profileImage'), (req, res) => {
+    console.log(req.file)
+    if (!req.file) {
+      return res.status(500).json({ msg: "Upload fail." });
+    }
+  
+    return res.status(201).json({ url: req.file.path });
+  });
 
 
 
@@ -114,6 +130,7 @@ router.get("/verify", isAuthenticated, (req, res) => {
 
     User.findOne({_id: req.user._id})
         .populate('posts')
+        .populate('reviews')
         .then((foundUser) => {
             const payload = { ...foundUser };
             delete payload._doc.password;
